@@ -98,7 +98,6 @@ const element = document.querySelector("#result");
 ReactDOM.render(React.createElement(Address), element);
 
 
-
 //adress update
 //main component
 const AddressEdit = () => {
@@ -147,9 +146,20 @@ const AddressEdit = () => {
 
     const districtChangeHandler = (event) => {
         setDistrictId1(event.target.value);
-        fetch(`https://mobilservis.kintshop.com/MobileController/neighborhood/${provinceId1}/${event.target.value}`)
-            .then(response => response.json())
-            .then(data => setNeighbourhood1(data))
+        //eğer il seçilmediyse
+        if (!provinceId1) {
+            let url = `https://mobilservis.kintshop.com/MobileController/neighborhood/${PROVINCE_ID}/${event.target.value}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => setNeighbourhood1(data))
+        } else {
+            let url = `https://mobilservis.kintshop.com/MobileController/neighborhood/${provinceId1}/${event.target.value}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => setNeighbourhood1(data))
+        }
+
+
     }
 
     return (
@@ -218,6 +228,5 @@ const Neighbourhood1 = (props) => {
 
 const element1 = document.querySelector("#result1");
 ReactDOM.render(React.createElement(AddressEdit), element1);
-
 
 
